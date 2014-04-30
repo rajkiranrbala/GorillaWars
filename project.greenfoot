@@ -1,0 +1,18 @@
+#Greenfoot project file
+class.DefaultWorld.superclass=greenfoot.World
+mainWindow.height=754
+mainWindow.width=1382
+mainWindow.x=-8
+mainWindow.y=-8
+package.numDependencies=0
+package.numTargets=1
+project.charset=UTF-8
+target1.height=50
+target1.name=DefaultWorld
+target1.showInterface=false
+target1.type=ClassTarget
+target1.width=100
+target1.x=70
+target1.y=10
+version=2.5.0
+world.lastInstantiated=DefaultWorld

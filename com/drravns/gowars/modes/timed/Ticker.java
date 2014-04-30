@@ -1,4 +1,4 @@
-package com.drravns.gowars.actors;
+package com.drravns.gowars.modes.timed;
 
 import greenfoot.Actor;
 

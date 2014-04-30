@@ -1,6 +1,6 @@
 package com.drravns.gowars.modes.classic;
 
-import com.drravns.gowars.actors.Weapon;
+import com.drravns.gowars.weapons.Weapon;
 
 public class ClassicPlayer2TransitState implements IClassicState {
 
@@ -17,7 +17,7 @@ public class ClassicPlayer2TransitState implements IClassicState {
 			mode.endGame();
 		} else {
 			mode.setState(mode.getPlayer1TurnState());
-			mode.enablePlayer1Contoller();
+			mode.enablePlayer1Controller();
 		}
 	}
 

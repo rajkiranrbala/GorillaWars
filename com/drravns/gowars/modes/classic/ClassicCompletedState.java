@@ -1,6 +1,6 @@
 package com.drravns.gowars.modes.classic;
 
-import com.drravns.gowars.actors.Weapon;
+import com.drravns.gowars.weapons.Weapon;
 
 public class ClassicCompletedState implements IClassicState {
 

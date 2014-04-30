@@ -7,7 +7,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public interface IPlayerControlAdapter
+public interface IPlayerControlTarget
 {
     public void increaseVelocity();
     public void decreaseVelocity();

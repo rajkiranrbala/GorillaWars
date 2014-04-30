@@ -1,9 +1,9 @@
 package com.drravns.gowars.observers;
 
-import com.drravns.gowars.actors.Weapon;
+import com.drravns.gowars.weapons.Weapon;
 
 public interface IPlayerObserver extends IObserver {
-	void onVelocityChanaged(int id, int velocity);
+	void onVelocityChanged(int id, int velocity);
 
 	void onAngleChanged(int id, int angle);
 

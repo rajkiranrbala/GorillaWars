@@ -2,12 +2,13 @@ package com.drravns.gowars.actors;
 
 import com.drravns.gowars.observers.IPlayerObserver;
 
+import com.drravns.gowars.weapons.Weapon;
 import greenfoot.Actor;
 
 public class PlayerControlViewer extends Actor implements IPlayerObserver {
 
 	@Override
-	public void onVelocityChanaged(int id, int velocity) {
+	public void onVelocityChanged(int id, int velocity) {
 		// TODO Auto-generated method stub
 
 	}

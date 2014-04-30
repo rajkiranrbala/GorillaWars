@@ -1,4 +1,5 @@
 package com.drravns.gowars.weapons;
+
 import greenfoot.*; // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class ConcreteDecoratorPickAxe extends AbstractWeaponDecorator {
@@ -8,25 +9,21 @@ public class ConcreteDecoratorPickAxe extends AbstractWeaponDecorator {
 
 	@Override
 	public float getDamage() {
-		// TODO Auto-generated method stub
-		return 0;
+		return super.getDamage() + 0.15F;
 	}
 
 	@Override
 	public float getError() {
-		// TODO Auto-generated method stub
-		return 0;
+		return super.getError() + 0.15F;
 	}
 
 	@Override
 	public String getImage() {
-		// TODO Auto-generated method stub
-		return null;
+		return "pickaxeweapon";
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return "PickAxe";
 	}
 }

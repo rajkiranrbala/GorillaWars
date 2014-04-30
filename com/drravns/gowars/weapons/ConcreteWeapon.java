@@ -10,30 +10,22 @@ import greenfoot.*; // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class ConcreteWeapon implements IWeaponDecorator {
 
-	protected int velocity;
-	protected int angle;
-	protected boolean reverse;
+	public ConcreteWeapon() {
 
-	public ConcreteWeapon(int velocity, int angle, boolean reverse) {
-		this.velocity = velocity;
-		this.angle = angle;
-		this.reverse = reverse;
 	}
 
 	@Override
 	public String getImage() {
-		return "";
+		return "weapon";
 	}
 
 	@Override
 	public float getDamage() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 0.1F;
 	}
 
 	@Override
 	public float getError() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 0.0F;
 	}
 }

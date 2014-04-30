@@ -1,4 +1,5 @@
 package com.drravns.gowars.weapons;
+
 import greenfoot.*; // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
@@ -15,25 +16,21 @@ public class ConcreteDecoratorFireBall extends AbstractWeaponDecorator {
 
 	@Override
 	public float getDamage() {
-		// TODO Auto-generated method stub
-		return 0;
+		return super.getDamage() + 0.3F;
 	}
 
 	@Override
 	public float getError() {
-		// TODO Auto-generated method stub
-		return 0;
+		return super.getError() + 0.3F;
 	}
 
 	@Override
 	public String getImage() {
-		// TODO Auto-generated method stub
-		return null;
+		return "fireballweapon";
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return "Fireball";
 	}
 }

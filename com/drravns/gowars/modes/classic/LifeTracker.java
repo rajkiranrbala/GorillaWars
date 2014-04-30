@@ -1,5 +1,6 @@
-package com.drravns.gowars.actors;
+package com.drravns.gowars.modes.classic;
 
+import com.drravns.gowars.weapons.Weapon;
 import greenfoot.Actor;
 
 import com.drravns.gowars.observers.IPlayerObserver;
@@ -12,11 +13,11 @@ import com.drravns.gowars.observers.IPlayerObserver;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class PointsTracker extends Actor implements IPlayerObserver {
-	private int points = 0;
+public class LifeTracker extends Actor implements IPlayerObserver {
+	private double life = 100.00;
 	private boolean changed = false;
 
-	public PointsTracker() {
+	public LifeTracker() {
 
 	}
 
@@ -27,7 +28,7 @@ public class PointsTracker extends Actor implements IPlayerObserver {
 	}
 
 	@Override
-	public void onVelocityChanaged(int id, int velocity) {
+	public void onVelocityChanged(int id, int velocity) {
 		// TODO Auto-generated method stub
 
 	}
@@ -46,7 +47,10 @@ public class PointsTracker extends Actor implements IPlayerObserver {
 
 	@Override
 	public void onDamageReceived(int id, double value) {
-		points++;
+		life -= value;
+		if (life < 0) {
+			life = 0;
+		}
 		changed = true;
 
 	}
@@ -56,4 +60,5 @@ public class PointsTracker extends Actor implements IPlayerObserver {
 		// TODO Auto-generated method stub
 
 	}
+
 }

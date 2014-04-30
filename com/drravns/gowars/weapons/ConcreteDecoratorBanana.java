@@ -1,35 +1,30 @@
 package com.drravns.gowars.weapons;
+
 import greenfoot.*; // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-public class ConcreteDecoratorBanana extends AbstractWeaponDecorator
-{
-	public ConcreteDecoratorBanana(ConcreteWeapon w)
-	{
+public class ConcreteDecoratorBanana extends AbstractWeaponDecorator {
+	public ConcreteDecoratorBanana(ConcreteWeapon w) {
 		super(w);
 	}
 
 	@Override
 	public float getDamage() {
-		// TODO Auto-generated method stub
-		return 0;
+		return super.getDamage();
 	}
 
 	@Override
 	public float getError() {
-		// TODO Auto-generated method stub
-		return 0;
+		return super.getError();
 	}
 
 	@Override
 	public String getImage() {
-		// TODO Auto-generated method stub
-		return null;
+		return "bananaweapon";
 	}
-	
+
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return "Banana";
 	}
-  
+
 }
