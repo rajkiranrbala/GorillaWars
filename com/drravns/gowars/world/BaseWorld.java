@@ -12,8 +12,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class BaseWorld extends World {
     public BaseWorld() {
-        super(1024, 768, 1);
+        super(1024, 768, 1, false);
+        setBackground("images/BG_BaseWorld.png");
         wireUp();
+        Greenfoot.start();
     }
 
     private void wireUp() {
@@ -24,40 +26,24 @@ public class BaseWorld extends World {
                 Greenfoot.setWorld(new StrategySelect());
             }
         });
-        addObject(option1, 100, 100);
-
+        addObject(option1, 800, 180);
         MenuOption option2 = new MenuOption("Help");
-        option1.setCommand(new ICommand() {
-            @Override
-            public void execute() {
-                Greenfoot.setWorld(new StrategySelect());
-            }
-        });
         option2.setCommand(new ICommand() {
             @Override
             public void execute() {
                 Greenfoot.setWorld(new Help());
             }
         });
-        addObject(option2, 100, 100);
-        MenuOption option3 = new MenuOption("Options");
+        addObject(option2, 800, 220 + 100);
+        MenuOption option3 = new MenuOption("Exit");
         option3.setCommand(new ICommand() {
-            @Override
-            public void execute() {
-                Greenfoot.setWorld(new Options());
-            }
-        });
-        addObject(option3, 100, 100);
-
-        MenuOption option4 = new MenuOption("Exit");
-        option4.setCommand(new ICommand() {
             @Override
             public void execute() {
                 Greenfoot.stop();
                 System.exit(0);
             }
         });
-        addObject(option4, 100, 100);
+        addObject(option3, 800, 260 + 200);
     }
 
 }

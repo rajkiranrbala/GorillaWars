@@ -24,8 +24,9 @@ public class TimedMode extends AbstractMode {
     private IPlayerObserver observer = null;
     private int player1Points = 0;
     private int player2Points = 0;
-    private AtomicInteger time = new AtomicInteger(120);
+    private AtomicInteger time = new AtomicInteger(60);
     private Timer t = new Timer();
+
     public TimedMode() {
 
     }
@@ -48,13 +49,19 @@ public class TimedMode extends AbstractMode {
         observer = new PlayerObserver();
         player1PointsTracker = new PointsTracker();
         player2PointsTracker = new PointsTracker();
-        ticker = new Ticker(120);
+        ticker = new Ticker(60);
         timedCompletedState = new TimedCompletedState();
         timedInProgressState = new TimedInProgressState(this);
         player1.attach(observer);
-        player1.attach(player1PointsTracker);
+        player1.attach(player2PointsTracker);
         player2.attach(observer);
-        player2.attach(player2PointsTracker);
+        player2.attach(player1PointsTracker);
+        world.addObject(player1PointsTracker, 105, 40);
+        world.addObject(player2PointsTracker, 920, 40);
+        world.addObject(ticker, 512, 60);
+        enablePlayer1Controller();
+        enablePlayer2Controller();
+        state = timedInProgressState;
         startTimer();
 
     }
@@ -67,9 +74,9 @@ public class TimedMode extends AbstractMode {
         super.endGame();
         world.removeObject(ticker);
         if (player1Points == player2Points) {
-            showResult("draw");
+            showResult(0);
         } else {
-            showResult((player1Points > player2Points) ? "player1" : "player2");
+            showResult((player1Points > player2Points) ? 1 : 2);
         }
     }
 
@@ -79,7 +86,6 @@ public class TimedMode extends AbstractMode {
     }
 
     private void startTimer() {
-        t.cancel();
         t.scheduleAtFixedRate(new ElapsedTime(), Calendar.getInstance()
                 .getTime(), 1000);
     }
@@ -121,12 +127,13 @@ public class TimedMode extends AbstractMode {
 
         @Override
         public void run() {
-            time.set(time.get() - 1);
+            int val = time.get() - 1;
+            time.set(val);
             if (time.get() < 0) {
                 t.cancel();
                 state.onTimerExpired();
             } else {
-                getTicker().setTime(time.get());
+                getTicker().setTime(val);
             }
         }
 

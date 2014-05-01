@@ -14,7 +14,8 @@ import java.util.Random;
 
 public class Weapon extends Actor implements ISubject<IWeaponObserver> {
 
-    private int angle, velocity;
+    private int angle;
+    private double velocity;
     private boolean reverse;
     private IWeaponDecorator weaponDecorator;
     private DefaultSubject<IWeaponObserver> weaponSubject = new DefaultSubject<IWeaponObserver>();
@@ -26,9 +27,15 @@ public class Weapon extends Actor implements ISubject<IWeaponObserver> {
     private long startTime;
     private static Random r = new Random();
 
-    private int getXDisplacement(int t) {
-        double x = velocity * t + Math.cos(angle * Math.PI / 180);
-        x = x + x * (r.nextInt((int) (weaponDecorator.getError() * 100)) / 100);
+    private int getXDisplacement(double t) {
+        double x = velocity * t * Math.cos((float) angle * Math.PI / 180.0);
+        if (((int) weaponDecorator.getError()) != 0) {
+            x = x + x * (r.nextInt((int) (weaponDecorator.getError() * 100)) / 100);
+        }
+        if (x == 0) {
+            x = 1;
+        }
+
         if (reverse) {
             return initialX - (int) x;
         } else {
@@ -36,22 +43,31 @@ public class Weapon extends Actor implements ISubject<IWeaponObserver> {
         }
     }
 
-    private int getYDisplacement(int t) {
-        double y = velocity * t + Math.sin(angle * Math.PI / 180) - (9.81 * t * t / 2);
-        if (r.nextBoolean()) {
-            y = y + y * (r.nextInt((int) (weaponDecorator.getError() * 100)) / 100);
-        } else {
-            y = y - y * (r.nextInt((int) (weaponDecorator.getError() * 100)) / 100);
+    private int getYDisplacement(double t) {
+        double y = velocity * t * Math.sin((double) angle * Math.PI / 180.0) - (13.1 * t * t / 2.0);
+        if (((int) weaponDecorator.getError()) != 0) {
+            if (r.nextBoolean()) {
+                y = y + y * (r.nextInt((int) (weaponDecorator.getError() * 100)) / 100);
+            } else {
+                y = y - y * (r.nextInt((int) (weaponDecorator.getError() * 100)) / 100);
+            }
+        }
+        if (y == 0) {
+            y = 1;
         }
         return initialY - (int) y;
     }
 
+    private boolean passThroughObstacle;
 
-    public Weapon(IWeaponDecorator weaponDecorator, int velocity, int angle, boolean reverse) {
+    public Weapon(IWeaponDecorator weaponDecorator, int relativeVelocity, int angle, boolean reverse, boolean passThroughObstacle) {
         this.weaponDecorator = weaponDecorator;
-        this.velocity = velocity;
+        this.passThroughObstacle = passThroughObstacle;
         this.angle = angle;
         this.reverse = reverse;
+        this.velocity = (float) relativeVelocity;
+        System.out.println("Velocity" + velocity);
+        System.out.println("Angle" + angle);
         setImage(weaponDecorator.getImage());
     }
 
@@ -82,7 +98,7 @@ public class Weapon extends Actor implements ISubject<IWeaponObserver> {
             setRotation((getRotation() - 10) % 360);
         }
 
-        int t = (int) (Calendar.getInstance().getTimeInMillis() - startTime);
+        double t = (Calendar.getInstance().getTimeInMillis() - startTime) / 400.00;
         int x = getXDisplacement(t);
         int y = getYDisplacement(t);
         setLocation(x, y);
@@ -93,8 +109,21 @@ public class Weapon extends Actor implements ISubject<IWeaponObserver> {
             inflictDamage = true;
             return;
         }
-        if (getOneIntersectingObject(Obstacle.class) != null) {
+        if (!passThroughObstacle) {
+            if (getOneIntersectingObject(Obstacle.class) != null) {
+                endFlight = true;
+                return;
+            }
+        }
+
+        if (x < -100 || x > 1124) {
             endFlight = true;
+            return;
+        }
+
+        if (y > 868) {
+            endFlight = true;
+            return;
         }
 
     }

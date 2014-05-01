@@ -11,8 +11,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class GamePlay extends World {
     public GamePlay() {
-        super(1024, 768, 1);
+        super(1024, 768, 1, false);
+        setBackground("images/BG_GamePlay.png");
     }
+
 
     private IStrategy strategy;
 
@@ -20,7 +22,7 @@ public class GamePlay extends World {
         this.strategy = strategy;
     }
 
-    public void being(){
+    public void being() {
         strategy.buildWorld(this);
     }
 }

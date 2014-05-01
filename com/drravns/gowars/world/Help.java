@@ -10,7 +10,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Help extends World {
     public Help() {
-        super(1024, 768, 1);
+        super(1024, 768, 1, false);
     }
 
 }

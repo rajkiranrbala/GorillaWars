@@ -2,15 +2,17 @@ package com.drravns.gowars.command;
 
 import greenfoot.Actor;
 import greenfoot.Greenfoot;
-import greenfoot.GreenfootImage;
+
+import java.nio.file.Path;
 
 public class MenuOption extends Actor {
 
     private ICommand command = null;
 
     public MenuOption(String name) {
-        setImage(new GreenfootImage(400, 100));
-        getImage().drawString(name, 30, 20);
+
+        setImage("images/btn_" + name.toLowerCase() + ".png");
+
     }
 
     @Override

@@ -26,7 +26,7 @@ public class ConcreteDecoratorFireBall extends AbstractWeaponDecorator {
 
 	@Override
 	public String getImage() {
-		return "fireballweapon";
+		return "images/weapon_fireball.png";
 	}
 
 	@Override

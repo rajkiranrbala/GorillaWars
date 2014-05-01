@@ -7,13 +7,18 @@ import com.drravns.gowars.observers.DefaultSubject;
 import com.drravns.gowars.observers.IPlayerObserver;
 import com.drravns.gowars.observers.ISubject;
 import com.drravns.gowars.weapons.IWeaponDecorator;
+import greenfoot.Greenfoot;
+import greenfoot.World;
+
+import java.awt.event.MouseAdapter;
+import java.util.GregorianCalendar;
 
 public class Gorilla extends Actor implements ISubject<IPlayerObserver>,
         IPlayerControlTarget {
     private static int count = 0;
     private int id;
-    private int angle;
-    private int velocity;
+    private int angle = 0;
+    private int velocity = 0;
     private boolean reverse;
     private int selectedWeaponIndex = 0;
     private Obstacle obstacle;
@@ -24,7 +29,17 @@ public class Gorilla extends Actor implements ISubject<IPlayerObserver>,
         id = ++count;
         this.reverse = reverse;
         this.obstacle = o;
-        obstaclePositionY = o.getY();
+        if (reverse) {
+            setImage("images/gorilla_right.png");
+        } else {
+            setImage("images/gorilla_left.png");
+        }
+    }
+
+    @Override
+    protected void addedToWorld(World world) {
+        super.addedToWorld(world);
+        act();
     }
 
     public int getId() {
@@ -34,11 +49,9 @@ public class Gorilla extends Actor implements ISubject<IPlayerObserver>,
     public void act() {
         if (obstaclePositionY != obstacle.getY()) {
             obstaclePositionY = obstacle.getY();
-            int xPosition = obstacle.getX()
-                    + (obstacle.getImage().getWidth() - getImage().getWidth())
-                    / 2;
-            setLocation(xPosition, obstaclePositionY - getImage().getHeight()
-                    - 1);
+            int yPosition = obstacle.getY() - 384 - 38;
+            int xPosition = obstacle.getX();
+            setLocation(xPosition, yPosition);
         }
     }
 
@@ -74,7 +87,7 @@ public class Gorilla extends Actor implements ISubject<IPlayerObserver>,
 
     @Override
     public void setAngle(int angle) {
-        if (angle <= 180 && angle >= 0) {
+        if (angle <= 90 && angle >= 0) {
             this.angle = angle;
             for (IPlayerObserver o : playerSubject.getObservers()) {
                 o.onAngleChanged(this.id, angle);
@@ -84,7 +97,7 @@ public class Gorilla extends Actor implements ISubject<IPlayerObserver>,
 
     @Override
     public void setVelocity(int v) {
-        if (v <= 100 && v >= 1) {
+        if (v <= 200 && v >= 1) {
             this.velocity = v;
             for (IPlayerObserver o : playerSubject.getObservers()) {
                 o.onVelocityChanged(this.id, v);
@@ -103,7 +116,7 @@ public class Gorilla extends Actor implements ISubject<IPlayerObserver>,
 
     @Override
     public void previousWeapon() {
-        selectedWeaponIndex = (selectedWeaponIndex - 1)
+        selectedWeaponIndex = (selectedWeaponIndex + Weapon.getWeapons().length - 1)
                 % Weapon.getWeapons().length;
         for (IPlayerObserver o : playerSubject.getObservers()) {
             o.onWeaponChanged(id, Weapon.getWeapons()[selectedWeaponIndex]);
@@ -114,8 +127,14 @@ public class Gorilla extends Actor implements ISubject<IPlayerObserver>,
     public void launchWeapon() {
         IWeaponDecorator d = Weapon
                 .createWeapon(Weapon.getWeapons()[selectedWeaponIndex]);
-        Weapon w = new Weapon(d, velocity, angle, reverse);
-        getWorld().addObject(w, getX() + 8, getY() - 36);
+
+        Weapon w = null;
+        if (obstacle instanceof MovingObstacle) {
+            w = new Weapon(d, velocity, angle, reverse, true);
+        } else {
+            w = new Weapon(d, velocity, angle, reverse, false);
+        }
+        getWorld().addObject(w, getX(), getY() - 120);
         for (IPlayerObserver o : playerSubject.getObservers()) {
             o.onWeaponFired(id, w);
         }

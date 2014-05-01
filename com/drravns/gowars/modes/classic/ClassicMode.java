@@ -8,6 +8,8 @@ import com.drravns.gowars.modes.AbstractMode;
 import com.drravns.gowars.observers.IPlayerObserver;
 import com.drravns.gowars.world.GamePlay;
 
+import java.util.Random;
+
 public class ClassicMode extends AbstractMode {
 
     private ClassicCompletedState completedState;
@@ -25,10 +27,12 @@ public class ClassicMode extends AbstractMode {
     private IClassicState state = null;
     private IPlayerObserver observer = null;
 
-    private float player1Health = 100;
-    private float player2Health = 100;
+    private double player1Health = 1.0;
+    private double player2Health = 1.0;
 
+    private static Random r = new Random();
     public ClassicMode() {
+
     }
 
     @Override
@@ -46,6 +50,18 @@ public class ClassicMode extends AbstractMode {
         player1.attach(player1LifeTracker);
         player2.attach(observer);
         player2.attach(player2LifeTracker);
+        if (r.nextBoolean()) {
+            state = player1TurnState;
+            disablePlayer2Controller();
+            enablePlayer1Controller();
+
+        } else {
+            state = player2TurnState;
+            disablePlayer1Controller();
+            enablePlayer2Controller();
+        }
+        world.addObject(player1LifeTracker,105,40);
+        world.addObject(player2LifeTracker,920,40);
     }
 
     public void setState(IClassicState state) {
@@ -109,15 +125,15 @@ public class ClassicMode extends AbstractMode {
 
     }
 
-    private String winner = "draw";
+    private int winner = 0;
 
     public boolean checkEndGame() {
 
         if (player1Health <= 0) {
-            winner = "player2";
+            winner = 2;
             return true;
         } else if (player2Health <= 0) {
-            winner = "player1";
+            winner = 1;
             return true;
         }
         return false;

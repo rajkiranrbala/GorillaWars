@@ -19,7 +19,7 @@ public class ConcreteDecoratorBanana extends AbstractWeaponDecorator {
 
 	@Override
 	public String getImage() {
-		return "bananaweapon";
+		return "images/weapon_banana.png";
 	}
 
 	@Override

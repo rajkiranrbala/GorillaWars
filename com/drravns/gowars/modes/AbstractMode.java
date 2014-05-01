@@ -3,11 +3,15 @@ package com.drravns.gowars.modes;
 import com.drravns.gowars.actors.Gorilla;
 import com.drravns.gowars.actors.Obstacle;
 import com.drravns.gowars.actors.PlayerControlViewer;
+import com.drravns.gowars.actors.Result;
 import com.drravns.gowars.controllers.KeyController;
 import com.drravns.gowars.controllers.KinectController;
 import com.drravns.gowars.controllers.Player1KeyControlHandler;
 import com.drravns.gowars.controllers.Player2KeyControlHandler;
 import com.drravns.gowars.world.GamePlay;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Kitty on 4/29/2014.
@@ -36,19 +40,53 @@ public abstract class AbstractMode implements IStrategy {
         initialize();
     }
 
+
+    private static Random r = new Random();
+
+    private Obstacle findMaxIndex(ArrayList<Obstacle> obstacles, int... indices) {
+        int maxIndex = indices[0];
+        for (int i : indices) {
+            if (obstacles.get(maxIndex).getY() > obstacles.get(i).getY()) {
+                maxIndex = i;
+            }
+        }
+        return obstacles.get(maxIndex);
+    }
+
     private void initialize() {
-        player1 = new Gorilla(false, null);
-        player2 = new Gorilla(true, null);
+        ArrayList<Obstacle> myObstacles = new ArrayList<Obstacle>();
+        for (int i = 0; i < 10; i++) {
+            int y = 384 + 300 + r.nextInt(400);
+            Obstacle o = getObstacle();
+            myObstacles.add(o);
+            world.addObject(o, 50 + 100 * i + 3, y);
+        }
+        player1 = new Gorilla(false, findMaxIndex(myObstacles, 0, 1, 2));
+        player2 = new Gorilla(true, findMaxIndex(myObstacles, 9, 8, 7));
+        world.addObject(player1, 0, 0);
+        world.addObject(player2, 0, 0);
+
         player1KeyControlHandler = new Player1KeyControlHandler(player1);
         player2KeyControlHandler = new Player2KeyControlHandler(player2);
         player1KeyControlHandler.setNext(player2KeyControlHandler);
         keyController = new KeyController(player1KeyControlHandler);
+
         kinectController = new KinectController(player1KeyControlHandler);
+
         world.addObject(keyController, -1000, -1000);
+
         player1ControlViewer = new PlayerControlViewer();
         player2ControlViewer = new PlayerControlViewer();
+
         player1.attach(player1ControlViewer);
         player2.attach(player2ControlViewer);
+        player1ControlViewerPositionX = 317;
+        player1ControlViewerPositionY = 55;
+        player2ControlViewerPositionX = 719;
+        player2ControlViewerPositionY = 55;
+        world.addObject(player1ControlViewer, player1ControlViewerPositionX, player1ControlViewerPositionY);
+        world.addObject(player2ControlViewer, player2ControlViewerPositionX, player2ControlViewerPositionY);
+
         try {
             kinectController.start(true, 320, 640);
         } catch (Exception ex) {
@@ -93,8 +131,9 @@ public abstract class AbstractMode implements IStrategy {
         }
     }
 
-    protected void showResult(String winner) {
-
+    protected void showResult(int winner) {
+        Result r = new Result(winner);
+        world.addObject(r, 512, 384);
     }
 
     public abstract Obstacle getObstacle();

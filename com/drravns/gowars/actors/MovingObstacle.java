@@ -3,21 +3,20 @@ package com.drravns.gowars.actors;
 import greenfoot.World;
 
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by Kitty on 4/29/2014.
  */
 public class MovingObstacle extends Obstacle {
 
-    private static final int MAX_Y = 1000;
-    private static final int MIN_Y = 400;
+    private static final int MAX_Y = 1048;
+    private static final int MIN_Y = 700;
     private static Random r = new Random();
-    private static int steps = 5;
-    private AtomicBoolean moveTop = new AtomicBoolean();
+    private int steps = 5;
+    private boolean moveTop;
 
     public MovingObstacle() {
-        moveTop.set(r.nextBoolean());
+        moveTop = r.nextBoolean();
         steps = 3 + r.nextInt(5);
     }
 
@@ -29,17 +28,15 @@ public class MovingObstacle extends Obstacle {
     @Override
     public void act() {
         int y = getY();
-        if (moveTop.get()) {
+        if (moveTop) {
             y = y - steps;
             if (y < MIN_Y) {
-                moveTop.set(!moveTop.get());
-                return;
+                moveTop = false;
             }
         } else {
             y = y + steps;
-            if (y > MIN_Y) {
-                moveTop.set(!moveTop.get());
-                return;
+            if (y > MAX_Y) {
+                moveTop = true;
             }
         }
         setLocation(getX(), y);

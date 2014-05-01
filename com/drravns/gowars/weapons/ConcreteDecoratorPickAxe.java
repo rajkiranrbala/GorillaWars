@@ -19,7 +19,7 @@ public class ConcreteDecoratorPickAxe extends AbstractWeaponDecorator {
 
 	@Override
 	public String getImage() {
-		return "pickaxeweapon";
+		return "images/weapon_pickaxe.png";
 	}
 
 	@Override

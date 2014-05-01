@@ -7,14 +7,16 @@ public class Player1KeyControlHandler extends AbstractKeyHandler {
         super(controller);
     }
 
+
+
     protected void initializeKeys() {
-        keyMap.put(VELOCITY_UP, "up");
-        keyMap.put(VELOCITY_DOWN, "down");
-        keyMap.put(ANGLE_UP, "right");
-        keyMap.put(ANGLE_DOWN, "left");
-        keyMap.put(WEAPON_PREV, "[");
-        keyMap.put(WEAPON_NEXT, "]");
-        keyMap.put(WEAPON_LAUNCH, "enter");
+        keyMap.put(VELOCITY_UP, "w");
+        keyMap.put(VELOCITY_DOWN, "s");
+        keyMap.put(ANGLE_UP, "d");
+        keyMap.put(ANGLE_DOWN, "a");
+        keyMap.put(WEAPON_PREV, "q");
+        keyMap.put(WEAPON_NEXT, "e");
+        keyMap.put(WEAPON_LAUNCH, "space");
     }
 
     @Override

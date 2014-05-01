@@ -12,15 +12,15 @@ public class ClassicPlayer2TurnState implements IClassicState {
 
 	@Override
 	public void onWeaponFlightEnded(Weapon w) {
-		mode.disablePlayer2Controller();
-		w.attach(mode.getPlayer2TransitState());
-		mode.setState(mode.getPlayer2TurnState());
+
 
 	}
 
 	@Override
 	public void onWeaponFired(int id, Weapon weapon) {
-
+        mode.disablePlayer2Controller();
+        weapon.attach(mode.getPlayer2TransitState());
+        mode.setState(mode.getPlayer2TurnState());
 	}
 
 }
