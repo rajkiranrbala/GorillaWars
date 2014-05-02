@@ -5,9 +5,9 @@ import com.drravns.gowars.actors.Obstacle;
 import com.drravns.gowars.actors.PlayerControlViewer;
 import com.drravns.gowars.actors.Result;
 import com.drravns.gowars.controllers.KeyController;
-import com.drravns.gowars.controllers.KinectController;
 import com.drravns.gowars.controllers.Player1KeyControlHandler;
 import com.drravns.gowars.controllers.Player2KeyControlHandler;
+import com.drravns.gowars.controllers.kinect.KinectController;
 import com.drravns.gowars.world.GamePlay;
 
 import java.util.ArrayList;
@@ -70,9 +70,8 @@ public abstract class AbstractMode implements IStrategy {
         player2KeyControlHandler = new Player2KeyControlHandler(player2);
         player1KeyControlHandler.setNext(player2KeyControlHandler);
         keyController = new KeyController(player1KeyControlHandler);
-
-        kinectController = new KinectController(player1KeyControlHandler);
-
+        kinectController = KinectController.getKinectController();
+        kinectController.setHandler(player1KeyControlHandler);
         world.addObject(keyController, -1000, -1000);
 
         player1ControlViewer = new PlayerControlViewer();
@@ -86,12 +85,7 @@ public abstract class AbstractMode implements IStrategy {
         player2ControlViewerPositionY = 55;
         world.addObject(player1ControlViewer, player1ControlViewerPositionX, player1ControlViewerPositionY);
         world.addObject(player2ControlViewer, player2ControlViewerPositionX, player2ControlViewerPositionY);
-
-        try {
-            kinectController.start(true, 320, 640);
-        } catch (Exception ex) {
-
-        }
+        kinectController.enableController();
     }
 
     public void enablePlayer2Controller() {
@@ -124,11 +118,7 @@ public abstract class AbstractMode implements IStrategy {
         disablePlayer2Controller();
         world.removeObject(player1ControlViewer);
         world.removeObject(player2ControlViewer);
-        try {
-            kinectController.stop();
-        } catch (Exception ex) {
-
-        }
+        kinectController.disableController();
     }
 
     protected void showResult(int winner) {

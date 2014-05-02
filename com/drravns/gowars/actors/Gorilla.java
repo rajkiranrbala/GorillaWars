@@ -1,17 +1,13 @@
 package com.drravns.gowars.actors;
 
-import com.drravns.gowars.weapons.Weapon;
-import greenfoot.Actor;
 import com.drravns.gowars.controllers.IPlayerControlTarget;
 import com.drravns.gowars.observers.DefaultSubject;
 import com.drravns.gowars.observers.IPlayerObserver;
 import com.drravns.gowars.observers.ISubject;
 import com.drravns.gowars.weapons.IWeaponDecorator;
-import greenfoot.Greenfoot;
+import com.drravns.gowars.weapons.Weapon;
+import greenfoot.Actor;
 import greenfoot.World;
-
-import java.awt.event.MouseAdapter;
-import java.util.GregorianCalendar;
 
 public class Gorilla extends Actor implements ISubject<IPlayerObserver>,
         IPlayerControlTarget {
@@ -96,11 +92,11 @@ public class Gorilla extends Actor implements ISubject<IPlayerObserver>,
     }
 
     @Override
-    public void setVelocity(int v) {
-        if (v <= 200 && v >= 1) {
-            this.velocity = v;
+    public void setVelocity(int velocity) {
+        if (velocity <= 200 && velocity >= 1) {
+            this.velocity = velocity;
             for (IPlayerObserver o : playerSubject.getObservers()) {
-                o.onVelocityChanged(this.id, v);
+                o.onVelocityChanged(this.id, velocity);
             }
         }
     }

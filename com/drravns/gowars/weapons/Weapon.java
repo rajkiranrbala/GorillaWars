@@ -66,8 +66,6 @@ public class Weapon extends Actor implements ISubject<IWeaponObserver> {
         this.angle = angle;
         this.reverse = reverse;
         this.velocity = (float) relativeVelocity;
-        System.out.println("Velocity" + velocity);
-        System.out.println("Angle" + angle);
         setImage(weaponDecorator.getImage());
     }
 

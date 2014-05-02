@@ -29,7 +29,9 @@ import greenfoot.util.StandalonePropStringManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 
@@ -59,9 +61,6 @@ public class Launcher {
      */
     public static void main(String[] args) {
         System.setProperty("apple.laf.useScreenMenuBar", "true");
-        if (args.length != 3 && args.length != 0) {
-            System.err.println("Wrong number of arguments");
-        }
         initProperties();
         System.setProperty("com.apple.mrj.application.apple.menu.about.name", scenarioName);
 
